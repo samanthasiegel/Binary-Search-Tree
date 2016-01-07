@@ -1,0 +1,161 @@
+public class BST <Item>{
+	public Node root;
+	
+/*Constructor for Binary Search Tree*/
+	public BST(){
+		this.root = null;
+	}
+	
+/*Use all items in ArrayList to construct BST*/
+	public void insert(ArrayList<Item> list){
+		for(Item i:list){
+			insert(num);
+		}
+	}
+	
+	public void insert(Item d){
+		this.root = insert(this.root, d);
+	}
+	
+	/*Insert item into BST*/	
+	public Node insert(Node n, Item d){
+		if(n==null){
+			return new Node(d, null, null);
+		}
+		if(d.compareTo(n.data)<=0){
+			n.left= insert(n.left, d);
+		}
+		else{
+			n.right  =insert(n.right, d);
+		}
+		n.s = size(n.left) + size(n.right)+1;
+		return n;
+	}
+	
+	public int size(){
+		return size(this.root);
+	}
+	
+	public int size(Node x){
+		if(x==null){
+			return 0;
+		}
+		else{
+			return x.s;
+		}
+	}
+	
+
+	/*Search for specific item in BST*/
+	public boolean search(Node n, Item d){
+		if(n==null){
+			return false;
+		}
+		if(n.data == d){
+			return true;
+		}
+		if(d<=n.data){
+			return search(n.left, d);
+		}
+		else{
+			return search(n.right, d);
+		}
+	}
+	
+	/*Checks if BST is balanced, or if the depth from the root to each leaf does not differ by more than one node*/
+	public boolean isBalanced(Node n){
+		if(Math.abs(maxHeight(n)-minHeight(n))>1){
+			return false;
+		}
+		return true;
+	}
+	
+	
+	public int maxHeight(Node root){
+		if(root==null){
+			return 0;
+		}
+		return Math.max(maxHeight(root.left), maxHeight(root.right))+1;
+	}
+	
+	public int minheight(Node root){
+		if(root==null){
+			return 0;
+		}
+		return Math.min(minHeight(root.left), minHeight(root.right))+1;
+	}
+	
+	
+	
+	public void remove(Item d){
+		this.root = remove(this.root, d);
+	}
+	
+	public Node remove(Node n, Item d){
+		if(n==null){
+			return null;
+		}
+		if(d.compareTo(n.data)<0){
+			n.left = remove(n.left, d);
+		}
+		else if(d.compareTo(n.data)>0){
+			n.right = remove(n.right, d);
+		}
+		else{
+			if(n.right==null){
+				return n.right;
+			}
+			if(n.left == null){
+				return n.left;
+			}
+			Node temp = n;
+			n = min(temp.right);
+			n.right = deleteMin(temp.right);
+			n.left = t.left;
+		}
+		n.s = size(n.left) + size(n.right)+1;
+		return n;
+	}
+	
+	/*Find maximum value in BST*/
+	public int findMax(){
+		if(this.root==null){
+			throw new NullPointerException();
+		}
+		return getMax(this.root).data;
+	}
+	
+	public Node getMax(Node x){
+		if(x.right==null){
+			return x;
+		}
+		return getMax(x.right);
+	}
+	
+	/*Find minimum value in BST*/
+	public int findMin(){
+		if(this.root == null){
+			throw new NullPointerException();
+		}
+		return min(this.root).data;
+	}
+	
+	public Node min(Node root){
+		if(root.left==null){
+			return root;
+		}
+		else{
+			return min(root.left);
+		}
+	}
+	
+	/*Deletes minimum node from BST*/
+	public Node deleteMin(Node x){
+		if(x.left==null){
+			return x.right;
+		}
+		x.left = deleteMin(x.left);
+		x.s = size(x.left) + size(x.right)+1;
+		return x;
+	}
+}
