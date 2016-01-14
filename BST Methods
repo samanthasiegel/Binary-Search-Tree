@@ -75,10 +75,10 @@ public class BST <Item>{
 		if(root==null){
 			return 0;
 		}
-		return Math.max(maxHeight(root.left), maxHeight(root.right))+1;
+		return Math.max(maxHeight(root.left), minHeight(root.right))+1;
 	}
 	
-	public int minheight(Node root){
+	public int minHeight(Node root){
 		if(root==null){
 			return 0;
 		}
